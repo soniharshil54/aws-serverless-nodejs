@@ -14,7 +14,14 @@ provider:
 
 custom:
   environment: ${file(./config.json):${opt:stage}}
-  stackName: ${self:service}-${opt:stage}    
+  stackName: ${self:service}-${opt:stage}  
+
+package:
+  exclude:
+    - node_modules/**
+    - '*.json'
+    - '*.yml'
+  individually: true  
 
 functions:
   publicApiHandler:

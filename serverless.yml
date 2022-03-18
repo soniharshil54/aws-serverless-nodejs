@@ -21,6 +21,7 @@ package:
     - node_modules/**
     - '*.json'
     - '*.yml'
+    - test/**
   individually: true  
 
 functions:
@@ -38,3 +39,23 @@ functions:
           path: private
           method: get 
           private: true
+
+  uuidLayerHandler:
+    handler: functions/apis/uuidLayer.handler
+    events:
+      - http: 
+          path: public-uuid-layer
+          method: get
+    layers:
+      - !Ref UuidLambdaLayer
+
+layers:
+  uuid:
+    path: layers/uuid
+    name: ${sls:stage}-uuid-layer
+    description: generate uuid
+    compatibleRuntimes:
+      - nodejs14.x
+    compatibleArchitectures:
+      - x86_64
+    retain: false                   
